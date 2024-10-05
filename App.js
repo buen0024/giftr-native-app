@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { StyleSheet, Button } from 'react-native';
 import PeopleScreen from './pages/PeopleScreen'
 import AddPersonScreen from "./pages/AddPersonScreen";
@@ -12,6 +13,7 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
+    <GestureHandlerRootView style={{ flex: 1 }}>
     <PeopleProvider>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="People">
@@ -42,6 +44,7 @@ export default function App() {
         </Stack.Navigator>
       </NavigationContainer>
     </PeopleProvider>
+    </GestureHandlerRootView>
   );
 }
 
