@@ -1,11 +1,12 @@
 import React, { useContext } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { PeopleContext } from '../context/PeopleContext';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { Swipeable } from 'react-native-gesture-handler';
 
 const PeopleScreen = ({navigation}) => {
-  const { people } = useContext(PeopleContext);
+  const { people, removePerson } = useContext(PeopleContext);
 
   // Sort people by month and day of birth
   const sortedPeople = [...people].sort((a, b) => {
@@ -22,6 +23,30 @@ const PeopleScreen = ({navigation}) => {
     navigation.navigate('Idea', {id: personId});
   }
 
+  const renderRightActions = (personId) => {
+  return (
+    <TouchableOpacity onPress={() => handleDelete(personId)} style={styles.deleteBtn}>
+      <Text style={styles.deleteTxt}>Delete</Text>
+    </TouchableOpacity>
+  );
+};
+
+
+  const handleDelete = (personId) => {
+    Alert.alert(
+      'Delete Person',
+      'Are you sure you want to delete this person?',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Delete',
+          style: 'destructive',
+          onPress: () => removePerson(personId), // Remove the person from the list
+        },
+      ]
+    );
+  }
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -34,6 +59,7 @@ const PeopleScreen = ({navigation}) => {
           data={sortedPeople}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => (
+            <Swipeable renderRightActions={() => renderRightActions(item.id)}>
             <TouchableOpacity
               style={styles.personContainer}
               onPress={() => toIdeaScreen(item.id)} // Navigate on press
@@ -46,6 +72,7 @@ const PeopleScreen = ({navigation}) => {
                 <Icon name="bulb-outline" size={30} color="#007bff" />
               </View>
             </TouchableOpacity>
+            </Swipeable>
           )}
         />
       )}
