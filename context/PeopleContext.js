@@ -9,8 +9,12 @@ export const PeopleProvider = ({children}) => {
     setPeople((prevPeople) => [...prevPeople, person]);
   };
 
+  const removePerson = (personId) => {
+    setPeople((prevPeople) => prevPeople.filter((person) => person.id !== personId))
+  }
+
   return (
-    <PeopleContext.Provider value={{people,addPerson}}>
+    <PeopleContext.Provider value={{people,addPerson,removePerson}}>
       {children}
     </PeopleContext.Provider>
   )
