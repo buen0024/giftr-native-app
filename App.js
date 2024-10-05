@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StyleSheet, Button } from 'react-native';
 import PeopleScreen from './pages/PeopleScreen'
 import AddPersonScreen from "./pages/AddPersonScreen";
-// import IdeaScreen from './pages/IdeaScreen'
+import IdeaScreen from './pages/IdeaScreen'
 // import AddIdeaScreen from './pages/AddIdeaScreen'
 import { PeopleProvider } from "./context/PeopleContext";
 
@@ -33,6 +33,11 @@ export default function App() {
             name="AddPerson" 
             component={AddPersonScreen} 
             options={{ title: 'Add Person' }}
+          />
+          <Stack.Screen 
+            name="Idea"
+            component={IdeaScreen}
+            options={{ title: 'Idea Screen' }}
           />
         </Stack.Navigator>
       </NavigationContainer>
