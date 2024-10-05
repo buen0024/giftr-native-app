@@ -1,9 +1,10 @@
 import React, { useContext } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { View, Text, FlatList, StyleSheet } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import { PeopleContext } from '../context/PeopleContext';
+import Icon from 'react-native-vector-icons/Ionicons';
 
-const PeopleScreen = () => {
+const PeopleScreen = ({navigation}) => {
   const { people } = useContext(PeopleContext);
 
   // Sort people by month and day of birth
@@ -17,6 +18,10 @@ const PeopleScreen = () => {
     return aDay - bDay; // Then sort by day
   });
 
+  const toIdeaScreen = (personId) => {
+    navigation.navigate('Idea', {id: personId});
+  }
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -29,10 +34,18 @@ const PeopleScreen = () => {
           data={sortedPeople}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => (
-            <View style={styles.personContainer}>
-              <Text style={styles.personText}>Name: {item.name}</Text>
-              <Text style={styles.personText}>DOB: {item.dob}</Text>
-            </View>
+            <TouchableOpacity
+              style={styles.personContainer}
+              onPress={() => toIdeaScreen(item.id)} // Navigate on press
+            >
+              <View style={styles.personInfo}>
+                <Text style={styles.personText}>Name: {item.name}</Text>
+                <Text style={styles.personText}>DOB: {item.dob}</Text>
+              </View>
+              <View>
+                <Icon name="bulb-outline" size={30} color="#007bff" />
+              </View>
+            </TouchableOpacity>
           )}
         />
       )}
@@ -55,9 +68,15 @@ const styles = StyleSheet.create({
     color: 'gray',
   },
   personContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     padding: 10,
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
+  },
+  personInfo: {
+    flexDirection: 'column',
   },
   personText: {
     fontSize: 16,
