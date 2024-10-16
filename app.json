@@ -7,9 +7,9 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/splash-giftr.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#fff"
     },
     "ios": {
       "supportsTablet": true
@@ -22,6 +22,11 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+  "permissions": [
+    "CAMERA",
+    "READ_EXTERNAL_STORAGE",
+    "WRITE_EXTERNAL_STORAGE"
+  ]
   }
 }
